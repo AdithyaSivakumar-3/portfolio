@@ -17,14 +17,14 @@
   }
   [data-theme="dark"]{
     --bg:#080b11;--bg-alt:#0c111a;--card:#0e141f;--text:#e6edf3;--muted:#97a4b4;--mutel:#5e6b7c;
-    --border:#1b2533;--border-l:#141c28;--soft:rgba(34,211,238,.12);--line:rgba(34,211,238,.35);
+    --border:#1b2533;--border-l:#141c28;--soft:rgba(34,211,238,.12);--line:rgba(34,211,238,.35);--ring:#22d3ee;
     --glow:rgba(34,211,238,.25);--grid:rgba(120,140,165,.06);--shadow:0 8px 30px rgba(0,0,0,.45);
     --shadow-lg:0 18px 50px rgba(0,0,0,.6);--veil:radial-gradient(circle at 70% 30%,rgba(34,211,238,.10),transparent 55%);
   }
   [data-theme="light"]{
     --bg:#fff;--bg-alt:#f5f8fc;--card:#fff;--text:#0f1b2d;--muted:#4a5b70;--mutel:#8595a8;
     --border:#e0e7f0;--border-l:#eef2f7;--accent:#0891b2;--accent-2:#0284c7;--accent-3:#4f46e5;
-    --soft:rgba(8,145,178,.08);--line:rgba(8,145,178,.3);--glow:rgba(8,145,178,.18);--grid:rgba(15,27,45,.04);
+    --soft:rgba(8,145,178,.08);--line:rgba(8,145,178,.3);--ring:#0b5c63;--glow:rgba(8,145,178,.18);--grid:rgba(15,27,45,.04);
     --shadow:0 4px 14px rgba(15,27,45,.07);--shadow-lg:0 16px 44px rgba(15,27,45,.12);--veil:radial-gradient(circle at 72% 28%,rgba(8,145,178,.08),transparent 55%);
   }
   *{margin:0;padding:0;box-sizing:border-box}
@@ -39,13 +39,13 @@
   nav{position:fixed;top:0;left:0;right:0;z-index:150;backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);background:color-mix(in srgb,var(--bg) 72%,transparent);border-bottom:1px solid transparent;transition:border-color .3s}
   nav.scrolled{border-bottom-color:var(--border)}
   .nav-inner{max-width:var(--max);margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:68px}
-  .nav-logo{font-family:var(--fm);font-weight:600;font-size:.95rem;display:flex;align-items:center;gap:.5rem}
+  .nav-logo{font-family:var(--fd);font-weight:700;font-size:1.05rem;display:flex;align-items:center;gap:.5rem}
   .blink{width:8px;height:8px;border-radius:2px;background:var(--accent);box-shadow:0 0 8px var(--glow);animation:pulse 2s infinite}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
   @keyframes breathe{0%,100%{opacity:.35}50%{opacity:.7}}
   .nav-right{display:flex;align-items:center;gap:1.75rem}
   .nav-links{display:flex;gap:1.75rem;list-style:none}
-  .nav-links a{color:var(--muted);font-size:.82rem;font-weight:500;font-family:var(--fm);position:relative;padding:4px 0;transition:color .2s}
+  .nav-links a{color:var(--muted);font-size:.92rem;font-weight:500;font-family:var(--fd);position:relative;padding:4px 0;transition:color .2s}
   .nav-links a:hover,.nav-links a.active{color:var(--accent)}
   .nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1.5px;background:var(--accent);box-shadow:0 0 6px var(--glow);transition:width .25s}
   .nav-links a:hover::after,.nav-links a.active::after{width:100%}
@@ -56,11 +56,18 @@
   .ham span{display:block;width:22px;height:2px;background:var(--text);margin:5px 0;transition:.3s;border-radius:2px}
   .hero{min-height:100vh;display:flex;align-items:center;padding:120px 2rem 60px;max-width:var(--max);margin:0 auto;position:relative}
   .hero::after{content:'';position:absolute;inset:0;z-index:-1;background:var(--veil)}
-  .hero-grid{display:flex;align-items:center;gap:3.5rem;width:100%}
-  .pw{position:relative;flex-shrink:0}
-  .photo{width:190px;height:190px;border-radius:24px;object-fit:cover;display:block;position:relative;z-index:2;border:1px solid var(--border)}
-  .pw::before{content:'';position:absolute;inset:-3px;border-radius:27px;z-index:1;background:linear-gradient(135deg,var(--accent),var(--accent-3));opacity:.6;filter:blur(14px);animation:breathe 5s ease-in-out infinite}
-  .pframe{position:absolute;inset:-10px;border:1px solid var(--line);border-radius:30px;z-index:0}
+  .theme-label{font-family:var(--fm);font-size:.6rem;letter-spacing:.02em;color:var(--mutel);white-space:nowrap;user-select:none}
+  .scroll-cue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:9px;font-family:var(--fm);font-size:.62rem;letter-spacing:.28em;color:var(--mutel);z-index:2;pointer-events:none}
+  .scroll-cue .scroll-line{width:1.5px;height:36px;border-radius:2px;overflow:hidden;background:var(--border)}
+  .scroll-cue .scroll-line::after{content:'';display:block;width:100%;height:40%;background:var(--accent);border-radius:2px;animation:scrolldown 1.8s cubic-bezier(.6,0,.4,1) infinite}
+  @keyframes scrolldown{0%{transform:translateY(-100%)}60%,100%{transform:translateY(250%)}}
+  .hero-grid{display:flex;flex-direction:row-reverse;align-items:center;gap:3.5rem;width:100%}
+  .pw{position:relative;flex-shrink:0;width:380px;height:380px;display:flex;align-items:center;justify-content:center}
+  .photo{width:268px;height:268px;border-radius:50%;object-fit:cover;object-position:center top;display:block;position:relative;z-index:2}
+  .pw::before{content:'';position:absolute;width:380px;height:380px;border-radius:50%;border:2px solid var(--ring);opacity:.18;z-index:0}
+  .ringthick{position:absolute;width:346px;height:346px;border-radius:50%;border:11px solid var(--ring);opacity:.45;z-index:1;animation:breathe 5s ease-in-out infinite}
+  .pw::after{content:'';position:absolute;width:300px;height:300px;border-radius:50%;border:2px solid var(--ring);opacity:.4;z-index:1}
+  .pframe{position:absolute;width:284px;height:284px;border:1px solid var(--ring);border-radius:50%;z-index:1;opacity:.35}
   .pbadge{position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);z-index:3;background:var(--card);border:1px solid var(--border);padding:.3rem .8rem;border-radius:20px;font-family:var(--fm);font-size:.68rem;color:var(--muted);white-space:nowrap;display:flex;align-items:center;gap:.4rem;box-shadow:var(--shadow)}
   .gdot{width:7px;height:7px;border-radius:50%;background:#22c55e;box-shadow:0 0 8px #22c55e;animation:pulse 2s infinite}
   .eyebrow{font-family:var(--fm);font-size:.8rem;color:var(--accent);letter-spacing:.05em;margin-bottom:1rem;display:flex;align-items:center;gap:.6rem}
@@ -78,12 +85,8 @@
   .btn-g:hover{border-color:var(--line);color:var(--accent);box-shadow:0 0 18px var(--glow)}
   .contacts{margin-top:2rem;display:flex;gap:1.25rem;flex-wrap:wrap;align-items:center;font-family:var(--fm);font-size:.78rem;color:var(--mutel)}
   .contacts a{color:var(--muted)}.contacts a:hover{color:var(--accent)}.sep{color:var(--border)}
-  .stat-strip{max-width:var(--max);margin:-10px auto 0;padding:0 2rem 2rem;display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
-  .stat{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem 1.25rem;position:relative;overflow:hidden}
-  .stat::before{content:'';position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,var(--accent),transparent)}
-  .stat .num{font-family:var(--fd);font-size:2rem;font-weight:700;line-height:1}
-  .stat .unit{color:var(--accent);font-size:1.3rem}
-  .stat .lbl{font-family:var(--fm);font-size:.72rem;color:var(--muted);margin-top:.5rem}
+  .cresult{margin:.9rem 1.35rem 0;padding:.5rem .75rem;background:var(--accent-soft);border:1px solid var(--accent-line);border-left:3px solid var(--accent);border-radius:8px;font-family:var(--fm);font-size:.72rem;color:var(--accent);display:flex;align-items:center;gap:.45rem;line-height:1.45;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .cresult::before{content:'▸';font-weight:700;flex-shrink:0}
   section{padding:5.5rem 2rem;max-width:var(--max);margin:0 auto}
   .alt{background:var(--bg-alt);border-top:1px solid var(--border-l);border-bottom:1px solid var(--border-l)}
   .alt .inner{max-width:var(--max);margin:0 auto;padding:5.5rem 2rem}
@@ -127,10 +130,13 @@
   .edu-deg{font-size:.92rem;color:var(--accent);font-weight:500;margin-top:.4rem}
   .edu-loc{font-family:var(--fm);font-size:.76rem;color:var(--muted);margin-top:.25rem}
   .edu-det{font-size:.85rem;color:var(--muted);margin-top:.85rem;font-weight:300}.edu-det strong{color:var(--text);font-weight:500}
-  .timeline{position:relative;padding-left:2.25rem}
-  .timeline::before{content:'';position:absolute;left:6px;top:10px;bottom:10px;width:1.5px;background:linear-gradient(var(--line),var(--border) 30%)}
-  .ti{position:relative;padding-bottom:3.5rem}.ti:last-child{padding-bottom:0}
-  .tdot{position:absolute;left:-2.25rem;top:6px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:2px solid var(--accent);box-shadow:0 0 10px var(--glow)}
+  .timeline{position:relative}
+  .timeline::before{content:'';position:absolute;left:188px;top:10px;bottom:10px;width:1.5px;background:linear-gradient(var(--line),var(--border) 30%)}
+  .ti{position:relative;display:grid;grid-template-columns:168px 1fr;column-gap:2.25rem;padding-bottom:3.5rem}.ti:last-child{padding-bottom:0}
+  .tdate-col{justify-self:end;align-self:start;margin-top:.3rem;white-space:nowrap;font-family:var(--fm);font-size:.68rem;font-weight:700;letter-spacing:.02em;color:#fff;text-transform:uppercase;text-align:center;line-height:1.35;background:linear-gradient(135deg,var(--accent),var(--accent-3));padding:.42rem .7rem;border-radius:20px;box-shadow:0 3px 12px var(--glow)}
+  .tdot{position:absolute;left:182px;top:8px;width:13px;height:13px;border-radius:50%;background:var(--bg);border:2px solid var(--accent);box-shadow:0 0 10px var(--glow)}
+  .tl-labels{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.6rem}
+  .tl-label{display:inline-block;font-family:var(--fm);font-size:.66rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--accent);border:1px solid var(--line);background:var(--soft);padding:.28rem .7rem;border-radius:20px}
   .tdot::after{content:'';position:absolute;inset:3px;border-radius:50%;background:var(--accent)}
   .tcard{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;transition:border-color .3s,box-shadow .3s}
   .tcard:hover{border-color:var(--line);box-shadow:var(--shadow)}
@@ -155,8 +161,16 @@
   .outcome li::before{content:'+';position:absolute;left:0;color:var(--accent);font-family:var(--fm);font-weight:600}
   .ig{display:grid;gap:1rem;margin:1.25rem 0 0}.ig2{grid-template-columns:1fr 1fr}.ig3{grid-template-columns:1fr 1fr 1fr}
   .ig figure,.iw{margin:0;background:var(--bg-alt);border-radius:10px;overflow:hidden;border:1px solid var(--border-l)}
-  .ig img,.iw img{width:100%;height:auto;display:block}
+  .ig img{width:100%;aspect-ratio:16/10;object-fit:contain;display:block;padding:10px;box-sizing:border-box}
+  .ig3 img{aspect-ratio:4/3;padding:6px}
+  .iw img{width:100%;aspect-ratio:21/9;object-fit:contain;display:block;padding:10px;box-sizing:border-box}
   .ig figcaption,.iw figcaption{padding:.55rem .8rem;font-family:var(--fm);font-size:.7rem;color:var(--muted);text-align:center}
+  .zoomable{cursor:zoom-in}
+  .lightbox{position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;flex-direction:column;background:rgba(3,6,12,.92);backdrop-filter:blur(4px);padding:4vh 4vw;cursor:zoom-out}
+  .lightbox img{max-width:94vw;max-height:82vh;object-fit:contain;border-radius:8px;box-shadow:0 24px 70px rgba(0,0,0,.7);background:#fff}
+  .lightbox figcaption{color:#e6edf3;font-family:var(--fm);font-size:.85rem;margin-top:1.1rem;text-align:center;max-width:90vw}
+  .lightbox-close{position:fixed;top:18px;right:26px;width:42px;height:42px;border-radius:50%;font-size:1.5rem;line-height:1;color:#fff;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.25);cursor:pointer;z-index:301}
+  .lightbox-hint{color:rgba(230,237,243,.55);font-family:var(--fm);font-size:.68rem;margin-top:.5rem}
   .iw{margin:1rem 0 0}
   .pd{padding:2.5rem 0;border-bottom:1px solid var(--border-l)}.pd:last-child{border-bottom:none}
   .pd>h3{font-family:var(--fd);font-size:1.5rem;font-weight:700;margin-bottom:.3rem}
@@ -180,23 +194,31 @@
   .cpanel::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 0%,var(--soft),transparent 60%)}
   .cpanel h3{font-family:var(--fd);font-size:1.5rem;font-weight:700;position:relative}
   .cpanel p{color:var(--muted);font-weight:300;margin-top:.6rem;position:relative}
-  .clinks{display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:center;margin-top:2rem;position:relative}
-  .clinks a{display:flex;align-items:center;gap:.5rem;font-family:var(--fm);font-size:.82rem;transition:color .2s}.clinks a:hover{color:var(--accent)}
-  .cnote{margin-top:2rem;font-size:.82rem;color:var(--mutel);position:relative;font-weight:300}
+  .clinks{display:flex;flex-wrap:wrap;gap:1.1rem 1.75rem;justify-content:center;align-items:center;margin-top:2.2rem;position:relative}
+  .citem{display:inline-flex;align-items:center;gap:.6rem;color:var(--text);font-family:var(--fm);font-size:.95rem;transition:color .2s}
+  .citem:hover{color:var(--accent)}
+  .ciicon{width:42px;height:42px;border-radius:50%;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;background:var(--soft);border:1px solid var(--line);color:var(--accent);transition:transform .2s}
+  .citem:hover .ciicon{transform:translateY(-2px)}
+  .ciicon svg{width:21px;height:21px}
+  .copybtn{font-family:var(--fm);font-size:.72rem;cursor:pointer;line-height:1;background:var(--soft);border:1.5px solid var(--accent);color:var(--accent);padding:.34rem .6rem;border-radius:6px;transition:all .2s;box-shadow:0 0 0 3px var(--soft)}
+  .copybtn:hover{background:var(--accent);color:var(--bg)}
+  .copybtn.copied{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+  .cnote{margin-top:1.8rem;font-size:.85rem;color:var(--mutel);position:relative;font-weight:300}
   footer{text-align:center;padding:2.5rem 2rem;border-top:1px solid var(--border-l);font-family:var(--fm);font-size:.74rem;color:var(--mutel)}
   .thanks{text-align:center;padding:2.5rem 2rem .5rem;font-size:.92rem;color:var(--muted);font-weight:300}
   .backtop{position:fixed;bottom:2rem;right:2rem;width:46px;height:46px;border-radius:12px;background:var(--accent);color:#04121a;border:none;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px var(--glow);opacity:0;visibility:hidden;transform:translateY(10px);transition:all .3s;z-index:140}
   .backtop.vis{opacity:1;visibility:visible;transform:translateY(0)}.backtop:hover{transform:translateY(-3px)}
   .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}.reveal.in{opacity:1;transform:none}
-  @media (max-width:900px){.about-grid{grid-template-columns:1fr}.edu-grid{grid-template-columns:1fr}.stat-strip{grid-template-columns:1fr 1fr}}
+  @media (max-width:900px){.about-grid{grid-template-columns:1fr}.edu-grid{grid-template-columns:1fr}}
   @media (max-width:768px){
     .nav-links{display:none;position:fixed;top:68px;left:0;right:0;background:var(--bg);flex-direction:column;padding:1.5rem 2rem;gap:1.25rem;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
     .nav-links.open{display:flex}.ham{display:block}
     .hero{padding-top:110px;min-height:auto}.hero-grid{flex-direction:column;text-align:center;gap:2rem}
     .eyebrow,.cta-row,.contacts{justify-content:center}h1.name{font-size:2.4rem}.summary{margin:1.25rem auto 0}
     .pgrid{grid-template-columns:1fr}.ig2,.ig3{grid-template-columns:1fr}section{padding:4rem 1.25rem}.alt .inner{padding:4rem 1.25rem}
+    .timeline{padding-left:1.75rem}.timeline::before{left:5px}.ti{grid-template-columns:1fr;column-gap:0}.tdate-col{justify-self:start;margin-top:0;margin-bottom:.7rem}.tdot{left:-1.75rem;top:5px}
   }
-  @media (max-width:480px){.stat-strip{grid-template-columns:1fr 1fr}.cpanel{padding:2rem 1.25rem}}
+  @media (max-width:480px){.cpanel{padding:2rem 1.25rem}}
 </style>
 </head>
 <body>
@@ -204,39 +226,38 @@
 <script type="text/babel">
 const {useState,useEffect,useRef} = React;
 
-const NAV=[["top","~/home"],["work","work"],["about","about"],["experience","experience"],["projects","projects"],["skills","skills"],["contact","contact"]];
-const FILTERS=[["all","All"],["sim","Simulation & FEM"],["emachine","E-Machines"],["design","Mechanical Design"],["battery","Battery"]];
-const STATS=[["+","4","%","e-machine efficiency gain"],["−","30","%","torque ripple reduction"],["−","50","%","harness build time"],["<","11","%","FEM impedance deviation"]];
+const NAV=[["top","Home"],["work","Work"],["about","About"],["experience","Experience"],["projects","Projects"],["skills","Skills"],["contact","Contact"]];
+const FILTERS=[["all","All"],["design","Mechanical Design"],["sim","Simulation & FEM"],["emachine","E-Machines"],["battery","Battery"]];
 const COMPS=["Structural design & analysis","Modelling & simulation","Electromagnetic design","Design optimization using FEA","Analytical problem-solving","Critical thinking & adaptability","Team leadership & collaboration","Self-motivated & solution-oriented"];
 const EDU=[
  {school:"Chalmers University of Technology",date:"Aug 2023 – Oct 2025",deg:"M.Sc. Mobility Engineering — Mechanical Engineering",loc:"Gothenburg, Sweden",det:[["Coursework:","Electric & Hybrid Vehicles, Electric Machines for Vehicles, FEM-Based Design of Electric Machines, Lithium-Ion Battery Systems, Vehicle Motion Engineering, Connected Fleets, Systems & Mechatronics for Mobility, Finite Element Simulations in Design."],["Tools:","MATLAB, Simulink, Ansys Workbench, LabView, Docker, Siemens NX, Ansys Maxwell, COMSOL Multiphysics"]]},
  {school:"Amrita Vishwa Vidyapeetham",date:"Jul 2017 – Jul 2021",deg:"B.Tech. Mechanical Engineering",loc:"Coimbatore, India",det:[["Coursework:","Mechanics of Solids, Mechatronics, Kinematics & Dynamics of Machines, Finite Element Methods, CFD, Mechanical Vibrations, Material Selection, Automotive Chassis Design."]]}
 ];
 const EXP=[
- {id:"proj-ju",title:"Research Assistant — Computational Engineering",date:"Mar 2026 – Present",org:"Jönköping University",loc:"Jönköping, Sweden",sub:"Dept. of Product Development, Production and Design",
-  blocks:[["Responsibilities",[["Developing Digital Image Correlation in Python for real-time stress-strain estimation using a camera on a Universal Testing Machine."],["Building an in-built User Interface for coursework testing."],["Validating the in-house DIC script against an existing commercial DIC test rig."]]],["Technical Approach",[["Formulated specifications for in-house DIC testing from testing requirements."],["Conducting literature review on strain theories for pixel-to-strain calculations."],["Designing an adjustable camera mounting solution for UTM — CAD, material selection, manufacturing method selection, and prototyping."]]]],outcome:null,imgs:null},
- {id:"proj-thesis",title:"Master Thesis — Battery FEM Modelling",date:"Jan 2025 – Sept 2025",org:"Volvo Cars",loc:"Gothenburg, Sweden",sub:null,
+ {id:"proj-ju",title:"Research Assistant — Computational Engineering",date:"Mar 2026 – Present",org:"Jönköping University",loc:"Jönköping, Sweden",sub:"Dept. of Product Development, Production and Design",labels:["Digital Image Correlation","Python","UTM Testing"],
+  blocks:[["Responsibilities",[["Developing Digital Image Correlation in Python for real-time stress-strain estimation using a camera on a Universal Testing Machine."],["Building an in-built User Interface for coursework testing."],["Validating the in-house DIC script against an existing commercial DIC test rig."]]],["Technical Approach",[["Formulated specifications for in-house DIC testing from testing requirements."],["Conducting literature review on strain theories for pixel-to-strain calculations."],["Designing an adjustable camera mounting solution for UTM — CAD, material selection, manufacturing method selection, and prototyping."]]]],outcome:null,imgs:[[["images/ju-utmrig.png","In-house Universal Testing Machine Assembly with DIC installation"],["images/ju-dic.png","User Interface design for DIC testing"]]]},
+ {id:"proj-thesis",title:"Master Thesis — Battery FEM Modelling",date:"Jan 2025 – Sept 2025",org:"Volvo Cars",loc:"Gothenburg, Sweden",sub:null,labels:["Battery FEM","HF Impedance","Multiphysics","Optimization"],
   blocks:[["Responsibilities",[["Developed a 3D FEM model to characterize the multidisciplinary behaviour of a Li-ion cell."],["Built an automated Multi-Objective Genetic Algorithm-based computational framework for cell geometry optimization."],["Conducted battery cell testing to measure frequency response using a VNA (Bode 100)."]]],["Technical Approach",[["Developed solver setup for electromagnetic, heat transfer and structural mechanics in ElmerFEM, simulated using an MPI cluster in Linux."],["Characterized cell impedance and correlated with measured data in the 1 kHz to 100 MHz range."],[["Tools:","ANSA pre-processor, Spyder IDE, MATLAB, ParaView, Gnuplot, DAKOTA, Python."]]]]],
   outcome:["Validated simulation against experimental data with less than 11% impedance deviation.","Visualized current density, EM fields, temperature, displacement, and stress in a cylindrical cell.","MOGA optimization reduced the need for physical prototyping."],
   imgs:[[["images/bode-plot.png","Bode plot — impedance validation"],["images/em-contour.png","Electric & magnetic field contour"]],[["images/stress-contour.png","Displacement & von Mises stress contour"],["images/flux-streamlines.png","Magnetic flux density streamlines (far-field)"]]]},
- {id:"proj-intern",title:"Summer Internship — Battery Hardware Design",date:"Jun 2024 – Aug 2024",org:"Volvo Cars",loc:"Gothenburg, Sweden",sub:null,
+ {id:"proj-intern",title:"Summer Internship — Battery Hardware Design",date:"Jun 2024 – Aug 2024",org:"Volvo Cars",loc:"Gothenburg, Sweden",sub:null,labels:["HV Busbar","Test Rig Design","Benchmarking"],
   blocks:[["Responsibilities",[["Developed concept and mechanical design for a universal test rig for HV battery busbar thermal and electrical validation."],["Benchmarked competitor battery packs and prepared documentation."]]],["Technical Approach",[["Formulated specifications from testing requirements. Identified suitable materials for test rig components."],["Designed components using CATIA V5 and Teamcenter PLM."]]]],
   outcome:["Designed an adaptable test rig for contactors with different ratings and stress testing.","Benchmarked battery structures, cooling systems, BMS, electronics, and safety systems."],imgs:null},
- {id:"proj-iit",title:"R&D Engineer — Electric Machine Development",date:"Jul 2021 – May 2023",org:"IIT Madras",loc:"Chennai, India",sub:null,
+ {id:"proj-iit",title:"R&D Engineer — Electric Machine Development",date:"Jul 2021 – May 2023",org:"IIT Madras",loc:"Chennai, India",sub:null,labels:["PMSM Design","Electromagnetics","FEA","Prod. Development"],
   blocks:[["Responsibilities",[["Electromagnetic and mechanical design of electric motors for various applications."],["Bench testing, integration of motors in 3-wheelers, and vehicle testing."],["Detailed teardown analysis and benchmarking of several PMSMs."],["Collaboration with cross-functional teams to achieve project goals."]]],["Technical Approach",[[["Electromagnetic: ","Designed slot-pole combination, core geometry, winding parameters, slot/air gap design, and pole shaping. Optimized torque and efficiency by reducing flux leakage, torque ripple, and losses."]],[["Mechanical: ","3D CAD for stator, rotor and housing. Material and manufacturing process selection. Applied GD&T and DFMA. Prepared 2D drawings and simulated stator stresses."]],[["Testing: ","Line resistance, short circuit test, back-EMF, rope brake dynamometer, and resistive load bank testing."]],[["Tools: ","CATIA V5, SolidWorks, Ansys MotorCAD, FEMM, MATLAB, Simulink, Ansys Workbench, CANalyzer."]]]]],
   outcome:["Improved 48V, 5 kW e-machine efficiency by 4%, reduced torque ripple by 30%, reduced stator/rotor weight by 5%.","The high-efficiency traction motor was launched by MeitY, Government of India.","Designed a 2 kW Ferrite-assisted PMSM achieving cost reduction with comparable torque to NdFeB magnets."],
   imgs:[[["images/pmsm-cad.jpg","5 kW PMSM CAD model"],["images/pmsm-emag.png","Electromagnetic simulation"],["images/pmsm-retrofit.png","5 kW PMSM on three-wheeler"]]],img3:true}
 ];
 const CARDS=[
- {href:"proj-thesis",cat:"sim battery",img:"images/em-contour.png",org:"Volvo Cars — Master Thesis",title:"Battery Cell FEM Modelling & Optimization",desc:"3D multiphysics FEM model of a Li-ion cell with genetic-algorithm optimization, validated against experimental impedance data.",tags:["ElmerFEM","DAKOTA","Python","MPI"]},
- {href:"proj-cfs",cat:"design",img:"images/lv-assembly.png",org:"Chalmers Formula Student",title:"Powertrain & LV Systems Engineering",desc:"Head of Powertrain & LV. Designed enclosures, cooling, wiring harness, and vehicle integration for an electric racecar.",tags:["Siemens NX","Ansys","Topology Opt."]},
- {href:"proj-iit",cat:"emachine sim",img:"images/pmsm-emag.png",org:"IIT Madras — R&D Engineer",title:"Electric Machine Design & Development",desc:"Designed and optimized 48V PMSM motors. +4% efficiency, −30% torque ripple, launched by the Government of India.",tags:["Ansys MotorCAD","FEMM","CATIA V5"]},
- {href:"proj-intern",cat:"design battery",icon:"⚡",org:"Volvo Cars — Internship",title:"Battery Hardware Test Rig Design",desc:"Concept and mechanical design for a universal test rig for HV battery busbar validation. Benchmarked competitor packs.",tags:["CATIA V5","Teamcenter PLM"]},
- {href:"proj-reev",cat:"design",img:"images/pmdc-car.png",org:"SAE India — Team Astra",title:"Range Extended EV Powertrain",desc:"Led the mechanical powertrain subgroup for a hybrid EV. Designed motor mounts, coupling shafts, and drivetrain components.",tags:["Autodesk Inventor","Ansys Mechanical"]},
- {href:"proj-ju",cat:"sim",icon:"🔬",org:"Jönköping University — Research",title:"Digital Image Correlation Development",desc:"Python-based DIC for real-time stress-strain estimation on a UTM, incl. UI development and hardware mount design.",tags:["Python","DIC","CAD"]}
+ {href:"proj-thesis",cat:"sim battery",img:"images/em-contour.png",org:"Volvo Cars — Master Thesis",title:"Battery Cell FEM Modelling & Optimization",desc:"3D multiphysics FEM model of a Li-ion cell with multi-objective genetic-algorithm optimization across cell geometry.",tags:["ElmerFEM","DAKOTA","Python","MPI"],result:"≤11% impedance error"},
+ {href:"proj-cfs",cat:"design",img:"images/lv-assembly.png",org:"Chalmers Formula Student",title:"Powertrain & LV Systems Engineering",desc:"Head of Powertrain & LV. Designed waterproof enclosures, driverless-PC cooling, the LV wiring harness, and full vehicle integration.",tags:["Siemens NX","Ansys","Topology Opt."],result:"−50% harness build time"},
+ {href:"proj-iit",cat:"emachine sim",img:"images/pmsm-emag.png",org:"IIT Madras — R&D Engineer",title:"Electric Machine Design & Development",desc:"Electromagnetic and mechanical design of 48V PMSM traction motors, with teardown benchmarking and dynamometer testing.",tags:["Ansys MotorCAD","FEMM","CATIA V5"],result:"+4% eff · −30% torque ripple"},
+ {href:"proj-intern",cat:"design battery",icon:"⚡",org:"Volvo Cars — Internship",title:"Battery Hardware Test Rig Design",desc:"Concept and mechanical design of a universal test rig for HV battery busbar thermal and electrical validation.",tags:["CATIA V5","Teamcenter PLM"],result:"Reusable HV busbar test rig"},
+ {href:"proj-reev",cat:"design",img:"images/pmdc-car.png",org:"SAE India — Team Astra",title:"Range Extended EV Powertrain",desc:"Led the mechanical powertrain subgroup for a hybrid EV — motor mounts, coupling shafts, and drivetrain components.",tags:["Autodesk Inventor","Ansys Mechanical"],result:"−15% motor-mount weight"},
+ {href:"proj-ju",cat:"sim",img:"images/ju-dic.png",org:"Jönköping University — Research",title:"Digital Image Correlation Development",desc:"Python-based Digital Image Correlation for real-time strain on a UTM, including UI and camera-mount design.",tags:["Python","DIC","CAD"],result:"Validated vs. commercial rig"}
 ];
 const SKILLS=[["CAD Tools",["CATIA V5","Siemens NX","SolidWorks","Fusion 360","AutoCAD","Inventor","RapidHarness"]],["E-MAG Design",["Ansys Motor-CAD","Ansys Maxwell","FEMM"]],["Simulation",["ANSA","Ansys Workbench","Ansys Fluent","COMSOL","Simulink","ElmerFEM"]],["Programming",["MATLAB","Python","VS Code","Gnuplot"]],["Other Tools",["MS Office","Teamcenter PLM","Adobe Illustrator","Blender","Prusa Slicer","Bode Analyzer","CANalyzer"]]];
-const ROLES=['Simulation & Optimization','Electric Powertrains','Mechanical Design','FEM & Electromagnetics','CAD & System Testing'];
+const ROLES=['Mechanical Design','Simulation & Optimization','Electric Powertrains','FEM & Electromagnetics','CAD & System Testing'];
 
 function Li({item}){
   // item is array: [text] or [[bold,rest]]
@@ -250,10 +271,11 @@ function useReveal(){
     return ()=>io.disconnect();
   },[]);
 }
+let _openLB=()=>{};
 function ImgGrid({rows,three}){
   return rows.map((row,i)=>(
     <div className={"ig "+(three?"ig3":"ig2")} key={i}>
-      {row.map(([src,cap],j)=>(<figure key={j}><img src={src} alt={cap} loading="lazy"/><figcaption>{cap}</figcaption></figure>))}
+      {row.map(([src,cap],j)=>(<figure key={j}><img src={src} alt={cap} className="zoomable" onClick={()=>_openLB(src,cap)} loading="lazy"/><figcaption>{cap}</figcaption></figure>))}
     </div>
   ));
 }
@@ -280,8 +302,11 @@ function App(){
   const[menu,setMenu]=useState(false);
   const[role,setRole]=useState('');
   const[filter,setFilter]=useState('all');
+  const[lb,setLb]=useState(null);
+  _openLB=(src,cap)=>setLb({src,cap});
   const typing=useRef({ri:0,ci:0,del:false});
   useReveal();
+  useEffect(()=>{const h=e=>{if(e.key==='Escape')setLb(null)};window.addEventListener('keydown',h);return()=>window.removeEventListener('keydown',h)},[]);
 
   useEffect(()=>{
     try{const s=localStorage.getItem('portfolio-theme');if(s)setTheme(s);}catch(e){}
@@ -316,11 +341,12 @@ function App(){
     <div className="progress" style={{width:prog+'%'}}/>
     <nav className={scrolled?'scrolled':''}>
       <div className="nav-inner">
-        <a href="#top" className="nav-logo" onClick={go('top')}><span className="blink"/>adithya_sivakumar</a>
+        <a href="#top" className="nav-logo" onClick={go('top')}><span className="blink"/>Adithya Sivakumar</a>
         <div className="nav-right">
           <ul className={"nav-links"+(menu?' open':'')}>
             {NAV.map(([id,lbl])=>(<li key={id}><a href={"#"+id} className={active===id?'active':''} onClick={go(id)}>{lbl}</a></li>))}
           </ul>
+          <span className="theme-label">{theme==='dark'?'Switch to light mode':'Switch to dark mode'}</span>
           <button className="tt" onClick={()=>setTheme(theme==='dark'?'light':'dark')} aria-label="Toggle theme">
             {theme==='dark'
               ? <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
@@ -334,15 +360,16 @@ function App(){
     <div id="top" className="hero">
       <div className="hero-grid">
         <div className="pw">
+          <div className="ringthick"/>
           <div className="pframe"/>
-          <img src="images/profile.jpg" alt="Adithya Sivakumar" className="photo"/>
+          <img src="images/profile-nobg.png" alt="Adithya Sivakumar" className="photo"/>
           <div className="pbadge"><span className="gdot"/>Open to opportunities</div>
         </div>
         <div>
-          <div className="eyebrow">MECHANICAL ENGINEER · GOTHENBURG, SE</div>
+          <div className="eyebrow">MECHANICAL ENGINEER · HUSKVARNA, SE</div>
           <h1 className="name">Adithya <span className="grad">Sivakumar</span></h1>
           <div className="roles">{role}<span className="cursor">_</span></div>
-          <p className="summary">M.Sc. Mobility Engineering graduate from Chalmers, specialized in modelling, simulation, and optimization of electric powertrains. Hands-on with CAD, FEM, electromagnetic design, and system-level testing.</p>
+          <p className="summary">I turn complex physics into hardware that ships — from electric powertrains to battery systems, bridging high-fidelity simulation and the shop floor.</p>
           <div className="cta-row">
             <a href="#work" className="btn btn-p" onClick={go('work')}>View Work →</a>
             <a href="Adithya_Sivakumar_CV.pdf" className="btn btn-g" download>↓ Download CV</a>
@@ -355,10 +382,7 @@ function App(){
           </div>
         </div>
       </div>
-    </div>
-
-    <div className="stat-strip">
-      {STATS.map(([p,t,u,l],i)=>(<div className="stat reveal" key={i}><Counter prefix={p} target={t} unit={u}/><div className="lbl">{l}</div></div>))}
+      <div className="scroll-cue"><span>SCROLL</span><span className="scroll-line"/></div>
     </div>
 
     <section id="work">
@@ -371,8 +395,9 @@ function App(){
           const hidden=!(filter==='all'||c.cat.split(' ').includes(filter));
           return (
           <a href={"#"+c.href} className={"pcard"+(hidden?' hide':'')} key={c.href} onClick={go(c.href)}>
-            {c.img?<div className="pimg-w"><img src={c.img} alt={c.title} className="pimg" loading="lazy"/></div>:<div className="pph">{c.icon}</div>}
+            {c.img?<div className="pimg-w"><img src={c.img} alt={c.title} className="pimg"/></div>:<div className="pph">{c.icon}</div>}
             <div className="pbody"><div className="corg">{c.org}</div><h3>{c.title}</h3><p>{c.desc}</p></div>
+            {c.result&&<div className="cresult">{c.result}</div>}
             <div className="ptags">{c.tags.map((t,j)=>(<span className="tag" key={j}>{t}</span>))}</div>
           </a>);
         })}
@@ -416,8 +441,10 @@ function App(){
           {EXP.map((x)=>(
             <div className="ti reveal" id={x.id} key={x.id}>
               <div className="tdot"/>
+              <div className="tdate-col">{x.date}</div>
               <div className="tcard">
-                <div className="th"><h3>{x.title}</h3><span className="tdate">{x.date}</span></div>
+                <div className="th"><h3>{x.title}</h3></div>
+                {x.labels&&<div className="tl-labels">{x.labels.map((l,i)=>(<span className="tl-label" key={i}>{l}</span>))}</div>}
                 <div className="torg-row"><span className="torg">{x.org}</span><span className="tloc">{x.loc}</span></div>
                 {x.sub&&<div className="tsub">{x.sub}</div>}
                 {x.blocks.map(([h,items],bi)=>(
@@ -437,6 +464,7 @@ function App(){
 
       <div className="pd reveal" id="proj-cfs">
         <h3>Chalmers Formula Student (CFS)</h3>
+        <div className="tl-labels"><span className="tl-label">Powertrain &amp; LV</span><span className="tl-label">Enclosure Design</span><span className="tl-label">Wiring Harness</span><span className="tl-label">FEA &amp; Cooling</span></div>
         <div className="pdorg">Project Engineer</div>
         <div className="pddate">Sept 2023 – Sept 2024 · Gothenburg, Sweden</div>
         <p className="pddesc">International engineering competition — university teams design, manufacture, and compete with formula-style electric racing cars. Team size: 40 members.</p>
@@ -448,7 +476,7 @@ function App(){
           <ul className="elist"><li>Waterproofing via nitrile O-ring-based enclosure design.</li><li>Material selection and FEA optimization of critical mountings.</li><li>Cooling fan selected using analytical calculations (Bernoulli's equation).</li><li><strong>Tools:</strong> Siemens NX, Ansys Mechanical, Prusa Slicer, Foxglove</li></ul>
           <div className="outcome"><div className="ot">Outcome</div><ul><li>Achieved waterproofing of all LV enclosures.</li><li>18% weight reduction in PC mounting via topology optimization.</li><li>25% temperature drop using forced air cooling.</li></ul></div>
           <ImgGrid rows={[[["images/pc-enclosure.png","CAD model — PC enclosure assembly"],["images/pc-fea.png","FE simulation — stress analysis of PC mount"]]]}/>
-          <figure className="iw"><img src="images/cooling-test.png" alt="Cooling test temperature results" loading="lazy"/><figcaption>Temperature results from PC cooling test</figcaption></figure>
+          <figure className="iw"><img src="images/cooling-test.png" alt="Cooling test temperature results" className="zoomable" onClick={()=>_openLB("images/cooling-test.png","Temperature results from PC cooling test")} loading="lazy"/><figcaption>Temperature results from PC cooling test</figcaption></figure>
         </div>
         <div className="sp">
           <h4>Subproject 2 — Wiring Harness Design</h4>
@@ -462,12 +490,13 @@ function App(){
           <p className="spo"><strong>Objective:</strong> Packaging, mounting, routing, and power distribution of LV components with secure, accessible, and EMI-safe placement.</p>
           <ul className="elist"><li>Packaged components for ease of access with EMI-safe practices.</li><li>Cross-functional collaboration for clash checks.</li><li><strong>Methods:</strong> CAD packaging, DFMEA, clearance analysis, harness routing, design reviews</li></ul>
           <div className="outcome"><div className="ot">Outcome</div><ul><li>Optimized routing for easier debugging and weight reduction.</li><li>Reduced assembly/disassembly time.</li><li>Minimized rework through early clash checks.</li></ul></div>
-          <figure className="iw"><img src="images/lv-assembly.png" alt="LV assembly CAD" loading="lazy"/><figcaption>CAD assembly — electronics and autonomous components</figcaption></figure>
+          <figure className="iw"><img src="images/lv-assembly.png" alt="LV assembly CAD" className="zoomable" onClick={()=>_openLB("images/lv-assembly.png","CAD assembly — electronics and autonomous components")} loading="lazy"/><figcaption>CAD assembly — electronics and autonomous components</figcaption></figure>
         </div>
       </div>
 
       <div className="pd reveal" id="proj-reev">
         <h3>SAE Range Extended EV — Team Astra</h3>
+        <div className="tl-labels"><span className="tl-label">Series Hybrid</span><span className="tl-label">Powertrain</span><span className="tl-label">Motor Mounts</span><span className="tl-label">FEA</span></div>
         <div className="pdorg">Powertrain In-charge (Mechanical)</div>
         <div className="pddate">Dec 2018 – Feb 2020 · Coimbatore, India</div>
         <p className="pddesc">SAEINDIA REEV — national-level competition challenging students to design, fabricate, and compete with a Hybrid Electric Vehicle. Team size: 22.</p>
@@ -496,21 +525,32 @@ function App(){
     <section id="contact">
       <div className="head reveal"><div className="snum">07 — CONTACT</div><h2 className="stitle">Get in touch</h2></div>
       <div className="cpanel reveal">
-        <h3>Let's build something that moves.</h3>
+        <h3>Let's connect and build innovative solutions.</h3>
         <p>I'd be glad to connect if my background aligns with your team's goals.</p>
         <div className="clinks">
-          <a href="mailto:adithyasvk@outlook.com">✉ adithyasvk@outlook.com</a>
-          <a href="tel:+46767485838">☎ +46 76 748 5838</a>
-          <a href="https://linkedin.com/in/adithya-sivakumar3/" target="_blank" rel="noopener">in LinkedIn ↗</a>
-          <span style={{color:'var(--mutel)',fontFamily:'var(--fm)',fontSize:'.82rem',display:'flex',alignItems:'center',gap:'.5rem'}}>📍 Gothenburg, Sweden</span>
+          <span className="citem">
+            <span className="ciicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg></span>
+            <a href="mailto:adithyasvk@outlook.com" className="citem" style={{gap:0}}>adithyasvk@outlook.com</a>
+            <button className="copybtn" onClick={e=>{navigator.clipboard.writeText('adithyasvk@outlook.com');const t=e.currentTarget,o=t.textContent;t.textContent='Copied!';t.classList.add('copied');setTimeout(()=>{t.textContent=o;t.classList.remove('copied')},1500)}}>Copy</button>
+          </span>
+          <a className="citem" href="tel:+46767485838"><span className="ciicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>+46 76 748 5838</a>
+          <a className="citem" href="https://linkedin.com/in/adithya-sivakumar3/" target="_blank" rel="noopener"><span className="ciicon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></span>LinkedIn</a>
+          <span className="citem"><span className="ciicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>Huskvarna, Sweden</span>
         </div>
-        <p className="cnote"><strong style={{color:'var(--text)',fontWeight:500}}>Recommendation letters</strong> available upon request — from my Master thesis supervisor (Volvo Cars) and my former manager at IIT Madras.</p>
+        <p className="cnote"><strong style={{color:'var(--text)',fontWeight:500}}>Professional referrals</strong> available upon request.</p>
+        <p className="cnote" style={{marginTop:'.5rem'}}>I typically respond to emails within one business day.</p>
       </div>
     </section>
 
     <div className="thanks">Thank you for visiting my portfolio. 🌌</div>
     <footer>© 2026 Adithya Sivakumar · Mechanical Engineer · Simulation & Optimization · Electric Powertrains</footer>
     <button className={"backtop"+(showTop?' vis':'')} onClick={()=>window.scrollTo({top:0,behavior:'smooth'})} aria-label="Back to top">↑</button>
+    {lb&&<div className="lightbox" onClick={()=>setLb(null)}>
+      <button className="lightbox-close" onClick={()=>setLb(null)} aria-label="Close">×</button>
+      <img src={lb.src} alt={lb.cap}/>
+      <figcaption>{lb.cap}</figcaption>
+      <div className="lightbox-hint">Click anywhere or press Esc to close</div>
+    </div>}
   </>);
 }
 ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
